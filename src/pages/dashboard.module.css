@@ -1,0 +1,63 @@
+.dashboardHeader {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  align-items: center;
+  margin-bottom: 50px;
+  background-color: white;
+  padding: 0px 40px;
+}
+.userLogin {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.userPhoto {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-image: linear-gradient(135deg, #6574b1, #000000);
+  cursor: pointer;
+}
+.userName {
+  font-size: 15px;
+  font-weight: bold;
+}
+.dashboardCard {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 40px;
+}
+.cardTotal {
+  border: 1px black solid;
+  width: 400px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 20px 40px;
+  background-color: white;
+}
+.cardIncome {
+  border: 1px black solid;
+  width: 400px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 20px 40px;
+  background-color: white;
+}
+.cardExpense {
+  border: 1px black solid;
+  width: 400px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 20px 40px;
+  background-color: white;
+}
