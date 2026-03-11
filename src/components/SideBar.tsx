@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import styles from "./SideBar.module.css";
 function SideBar() {
   return (
-    <div>
-      <h2>Finance Tracker</h2>
+    <div className={styles.sideBarSection}>
+      <h2 className={styles.sideBarTitle}>Finance Tracker</h2>
       <ul>
         <li>
-          <Link to="/">Dashboard</Link>
+          <NavLink to="/">Dashboard</NavLink>
         </li>
         <li>
-          <Link to="/transactions">Transactions</Link>
+          <NavLink to="/transactions">Transactions</NavLink>
         </li>
         <li>
-          <Link to="/analytics">Analytics</Link>
+          <NavLink to="/analytics">Analytics</NavLink>
         </li>
         <li>
-          <Link to="/settings">Settings</Link>
+          <NavLink to="/settings">Settings</NavLink>
         </li>
       </ul>
     </div>
