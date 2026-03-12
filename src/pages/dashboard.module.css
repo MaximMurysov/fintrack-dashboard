@@ -1,3 +1,11 @@
+h1,
+h2,
+h3 {
+  color: #1f2933;
+}
+body {
+  color: #4b5563;
+}
 .dashboardHeader {
   display: flex;
   justify-content: space-between;
@@ -27,37 +35,175 @@
   display: flex;
   justify-content: space-between;
   padding: 0px 40px;
+  margin-bottom: 50px;
 }
 .cardTotal {
-  border: 1px black solid;
   width: 400px;
   height: 200px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
   border-radius: 10px;
-  padding: 20px 40px;
+  padding: 30px 50px;
   background-color: white;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  position: relative;
+}
+
+.cardTotal .icon {
+  width: 45px;
+  height: 45px;
+  background-color: rgba(0, 0, 255, 0.521);
+  border-radius: 5px;
+  padding: 7px;
+  position: absolute;
+  bottom: 50px;
+  right: 45px;
 }
 .cardIncome {
-  border: 1px black solid;
   width: 400px;
   height: 200px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
   border-radius: 10px;
   padding: 20px 40px;
   background-color: white;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.cardIncome .icon {
+  width: 45px;
+  height: 45px;
+  background-color: rgba(0, 128, 0, 0.438);
+  color: green;
+  border-radius: 5px;
+  padding: 7px;
+  position: absolute;
+  bottom: 50px;
+  right: 45px;
 }
 .cardExpense {
-  border: 1px black solid;
   width: 400px;
   height: 200px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
   border-radius: 10px;
   padding: 20px 40px;
   background-color: white;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  position: relative;
+}
+.cardTotal .value,
+.cardIncome .value,
+.cardExpense .value {
+  font-size: 32px;
+  font-weight: 700;
+}
+.cardExpense .icon {
+  width: 45px;
+  height: 45px;
+  background-color: rgba(255, 0, 0, 0.445);
+  color: red;
+  border-radius: 5px;
+  padding: 7px;
+  position: absolute;
+  bottom: 50px;
+  right: 45px;
+}
+
+.icon {
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.spendingOverview {
+  padding: 0px 40px;
+  margin-bottom: 50px;
+}
+.spendingOverviewContainer {
+  background-color: white;
+  height: 300px;
+  padding: 20px 40px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border-radius: 10px;
+}
+.spendingTitle {
+  margin-bottom: 10px;
+}
+
+.recentTransactions {
+  padding: 0px 40px;
+  margin-bottom: 50px;
+}
+.recentTransactionsContainer {
+  min-height: 300px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px 40px;
+}
+.recentTitle {
+  margin-bottom: 20px;
+}
+
+.recentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.transactionsTable {
+  width: 100%;
+}
+
+.transactionsTable th,
+.transactionsTable td {
+  padding: 12px 8px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.transactionsTable thead th {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #6b7280;
+}
+
+.amountNegative {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.amountPositive {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.linkButton {
+  border: none;
+  background: none;
+  color: #3b82f6;
+  font-size: 13px;
+  cursor: pointer;
+  margin-right: 8px;
+  padding: 0;
+}
+
+.linkButton:last-child {
+  margin-right: 0;
+}
+
+.viewAll {
+  border: none;
+  background: none;
+  color: #3b82f6;
+  font-size: 13px;
+  cursor: pointer;
 }
