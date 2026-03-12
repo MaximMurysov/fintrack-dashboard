@@ -5,6 +5,9 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import SpendingChart from "./SpendingChart";
 import { transactions, type Transactions } from "../data/transactions";
+import { MdOutlineEdit } from "react-icons/md";
+import { ImCheckmark } from "react-icons/im";
+import { MdCancelPresentation } from "react-icons/md";
 
 interface StatCardProps {
   title: string;
@@ -12,8 +15,8 @@ interface StatCardProps {
   icon: ReactNode;
   className?: string;
 }
-// type EditableField = "date" | "description" | "category" | "amount";
-// type Editing = { editId: number; value: EditableField } | null;
+type EditableField = "date" | "description" | "category" | "amount";
+
 function StatCard({ title, value, icon, className }: StatCardProps) {
   return (
     <div className={className}>
@@ -28,26 +31,39 @@ function Dashboard() {
   const [cardTransactions, setCardTrasactions] = useState(transactions);
   const [draftValue, setDraftValue] = useState<string>("");
   const [editId, setEditId] = useState<number | null>(null);
-  const editTransaction = (t: Transactions) => {
+  const [editingField, setEditingField] = useState<null | EditableField>(null);
+  const editTransaction = (t: Transactions, field: EditableField) => {
     setEditId(t.id);
-    setDraftValue(t.description);
+    setEditingField(field);
+    setDraftValue(String(t[field]));
   };
   const deleteTransaction = (id: number) => {
     setCardTrasactions(cardTransactions.filter((t) => t.id !== id));
   };
-  const cancelTransaction = () => {
-    setEditId(null);
-    setDraftValue("");
-  };
-  const saveTransaction = (id: number) => {
+  const saveTransaction = () => {
+    if (editId === null || !editingField) return;
     setCardTrasactions(
       cardTransactions.map((elem) =>
-        elem.id === id ? { ...elem, description: draftValue } : elem,
+        elem.id !== editId
+          ? elem
+          : {
+              ...elem,
+              [editingField]:
+                editingField === "amount" ? Number(draftValue) : draftValue,
+            },
       ),
     );
     setEditId(null);
     setDraftValue("");
+    setEditingField(null);
   };
+
+  const cancelTransaction = () => {
+    setEditId(null);
+    setEditingField(null);
+    setDraftValue("");
+  };
+
   const totalSum = cardTransactions.reduce(
     (acc, price) => (acc += price.amount),
     0,
@@ -129,53 +145,168 @@ function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {cardTransactions.map((elem) => (
-                <tr key={elem.id}>
-                  <td>{elem.date}</td>
-                  <td>
-                    {editId === elem.id ? (
-                      <input
-                        type="text"
-                        value={draftValue}
-                        onChange={(e) => setDraftValue(e.target.value)}
-                      />
-                    ) : (
-                      <>{elem.description}</>
-                    )}
-                  </td>
-                  <td>{elem.category}</td>
-                  <td
-                    className={
-                      elem.amount < 0
-                        ? styles.amountNegative
-                        : styles.amountPositive
-                    }
-                  >
-                    {elem.amount < 0
-                      ? `-$${Math.abs(elem.amount)}`
-                      : `+$${elem.amount}`}
-                  </td>
-                  <td>
-                    {editId === elem.id ? (
-                      <>
-                        <button onClick={() => saveTransaction(elem.id)}>
-                          save
-                        </button>
-                        <button onClick={cancelTransaction}>cancel</button>
-                      </>
-                    ) : (
-                      <>
-                        <button onClick={() => editTransaction(elem)}>
-                          Edit
-                        </button>
-                        <button onClick={() => deleteTransaction(elem.id)}>
-                          Delete
-                        </button>
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ))}
+              {cardTransactions.map((elem) => {
+                const isEditingDescription =
+                  editId === elem.id && editingField === "description";
+                const isEditingDate =
+                  editId === elem.id && editingField === "date";
+                const isEditingCategory =
+                  editId === elem.id && editingField === "category";
+                const isEditingAmount =
+                  editId === elem.id && editingField === "amount";
+                return (
+                  <tr key={elem.id}>
+                    <td>
+                      {isEditingDate ? (
+                        <>
+                          <input
+                            type="text"
+                            value={draftValue}
+                            onChange={(e) => setDraftValue(e.target.value)}
+                          />
+                          <button
+                            onClick={saveTransaction}
+                            className={styles.save}
+                          >
+                            <ImCheckmark />
+                          </button>
+                          <button
+                            className={styles.cancel}
+                            onClick={cancelTransaction}
+                          >
+                            <MdCancelPresentation />
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          {elem.date}
+                          <button
+                            className={styles.edit}
+                            onClick={() => editTransaction(elem, "date")}
+                          >
+                            <MdOutlineEdit />
+                          </button>
+                        </>
+                      )}
+                    </td>
+                    <td>
+                      {isEditingDescription ? (
+                        <>
+                          <input
+                            type="text"
+                            value={draftValue}
+                            onChange={(e) => setDraftValue(e.target.value)}
+                          />
+                          <button
+                            className={styles.save}
+                            onClick={saveTransaction}
+                          >
+                            <ImCheckmark />
+                          </button>
+                          <button
+                            onClick={cancelTransaction}
+                            className={styles.cancel}
+                          >
+                            <MdCancelPresentation />
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          {elem.description}
+                          <button
+                            className={styles.edit}
+                            onClick={() => editTransaction(elem, "description")}
+                          >
+                            <MdOutlineEdit />
+                          </button>
+                        </>
+                      )}
+                    </td>
+                    <td>
+                      {isEditingCategory ? (
+                        <>
+                          <input
+                            type="text"
+                            value={draftValue}
+                            onChange={(e) => setDraftValue(e.target.value)}
+                          />
+                          <button
+                            className={styles.save}
+                            onClick={saveTransaction}
+                          >
+                            <ImCheckmark />
+                          </button>
+                          <button
+                            onClick={cancelTransaction}
+                            className={styles.cancel}
+                          >
+                            <MdCancelPresentation />
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          {elem.category}
+                          <button
+                            className={styles.edit}
+                            onClick={() => editTransaction(elem, "category")}
+                          >
+                            <MdOutlineEdit />
+                          </button>
+                        </>
+                      )}
+                    </td>
+                    <td
+                      className={
+                        elem.amount < 0
+                          ? styles.amountNegative
+                          : styles.amountPositive
+                      }
+                    >
+                      {isEditingAmount ? (
+                        <>
+                          <input
+                            type="text"
+                            value={draftValue}
+                            onChange={(e) => setDraftValue(e.target.value)}
+                          />
+                          <button
+                            className={styles.save}
+                            onClick={saveTransaction}
+                          >
+                            <ImCheckmark />
+                          </button>
+                          <button
+                            onClick={cancelTransaction}
+                            className={styles.cancel}
+                          >
+                            <MdCancelPresentation />
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          {elem.amount > 0
+                            ? `$${elem.amount}`
+                            : `-$${Math.abs(elem.amount)}`}
+                          <button
+                            className={styles.edit}
+                            onClick={() => editTransaction(elem, "amount")}
+                          >
+                            <MdOutlineEdit />
+                          </button>
+                        </>
+                      )}
+                    </td>
+                    <td>
+                      <button
+                        className={styles.deleteTransaction}
+                        onClick={() => deleteTransaction(elem.id)}
+                      >
+                        delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
