@@ -1,21 +1,23 @@
 import styles from "./dashboard.module.css";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import SpendingChart from "./SpendingChart";
-import { transactions } from "../data/transactions";
+import { transactions, type Transactions } from "../data/transactions";
+
 interface StatCardProps {
   title: string;
   value: number;
   icon: ReactNode;
   className?: string;
 }
+// type EditableField = "date" | "description" | "category" | "amount";
+// type Editing = { editId: number; value: EditableField } | null;
 function StatCard({ title, value, icon, className }: StatCardProps) {
   return (
     <div className={className}>
       <h2>{title}</h2>
-
       <p className={styles.value}>$ {value}</p>
       <p className={styles.icon}>{icon}</p>
     </div>
@@ -23,15 +25,38 @@ function StatCard({ title, value, icon, className }: StatCardProps) {
 }
 
 function Dashboard() {
-  const totalSum = transactions.reduce(
+  const [cardTransactions, setCardTrasactions] = useState(transactions);
+  const [draftValue, setDraftValue] = useState<string>("");
+  const [editId, setEditId] = useState<number | null>(null);
+  const editTransaction = (t: Transactions) => {
+    setEditId(t.id);
+    setDraftValue(t.description);
+  };
+  const deleteTransaction = (id: number) => {
+    setCardTrasactions(cardTransactions.filter((t) => t.id !== id));
+  };
+  const cancelTransaction = () => {
+    setEditId(null);
+    setDraftValue("");
+  };
+  const saveTransaction = (id: number) => {
+    setCardTrasactions(
+      cardTransactions.map((elem) =>
+        elem.id === id ? { ...elem, description: draftValue } : elem,
+      ),
+    );
+    setEditId(null);
+    setDraftValue("");
+  };
+  const totalSum = cardTransactions.reduce(
     (acc, price) => (acc += price.amount),
     0,
   );
-  const incomeSum = transactions
+  const incomeSum = cardTransactions
     .filter((elem) => elem.amount > 0)
     .reduce((acc, price) => (acc += price.amount), 0);
 
-  const expensesSum = transactions
+  const expensesSum = cardTransactions
     .filter((elem) => elem.amount < 0)
     .reduce((acc, price) => (acc += Math.abs(price.amount)), 0);
   const cards = [
@@ -59,7 +84,7 @@ function Dashboard() {
   ];
 
   const transactionsTitle = ["Date", "Description", "Category", "Amount"];
-  const spendingData = transactions
+  const spendingData = cardTransactions
     .filter((elem) => elem.amount < 0)
     .map((elem) => ({ date: elem.date, amount: Math.abs(elem.amount) }));
   return (
@@ -104,10 +129,20 @@ function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {transactions.map((elem) => (
+              {cardTransactions.map((elem) => (
                 <tr key={elem.id}>
                   <td>{elem.date}</td>
-                  <td>{elem.description}</td>
+                  <td>
+                    {editId === elem.id ? (
+                      <input
+                        type="text"
+                        value={draftValue}
+                        onChange={(e) => setDraftValue(e.target.value)}
+                      />
+                    ) : (
+                      <>{elem.description}</>
+                    )}
+                  </td>
                   <td>{elem.category}</td>
                   <td
                     className={
@@ -121,8 +156,23 @@ function Dashboard() {
                       : `+$${elem.amount}`}
                   </td>
                   <td>
-                    <button className={styles.linkButton}>Edit</button>
-                    <button className={styles.linkButton}>Delete</button>
+                    {editId === elem.id ? (
+                      <>
+                        <button onClick={() => saveTransaction(elem.id)}>
+                          save
+                        </button>
+                        <button onClick={cancelTransaction}>cancel</button>
+                      </>
+                    ) : (
+                      <>
+                        <button onClick={() => editTransaction(elem)}>
+                          Edit
+                        </button>
+                        <button onClick={() => deleteTransaction(elem.id)}>
+                          Delete
+                        </button>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}
