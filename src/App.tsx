@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashoboard/Dashboard";
 import Analytics from "./pages/Analytics";
 import Transactions from "./pages/Transactions";
 import Settings from "./pages/Settings";
