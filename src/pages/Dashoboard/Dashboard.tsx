@@ -6,7 +6,7 @@ import { FaArrowTrendDown } from "react-icons/fa6";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import TransactionsTable from "./TransactionsTable";
-
+import DashboardHeaderAuth from "./DashboardHeaderAuth";
 interface StatCardProps {
   title: string;
   value: number;
@@ -24,14 +24,14 @@ function StatCard({ title, value, icon, className }: StatCardProps) {
     </div>
   );
 }
-type Password = string;
-interface UserLogin {
+export type Password = string;
+export interface UserLogin {
   name: string;
   password: Password;
 }
 
 function Dashboard() {
-  const [cardTransactions, setCardTrasactions] = useState(transactions);
+  const [cardTransactions, setCardTransactions] = useState(transactions);
   const [draftValue, setDraftValue] = useState<string>("");
   const [editId, setEditId] = useState<number | null>(null);
   const [editingField, setEditingField] = useState<null | EditableField>(null);
@@ -40,12 +40,12 @@ function Dashboard() {
     name: "",
     password: "",
   });
-  const handelEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      authorizationUser();
+      handleLogin();
     }
   };
-  const authorizationUser = () => {
+  const handleLogin = () => {
     if (!userLogin.name.trim() || !userLogin.password.trim()) return;
     setHasLogin(true);
   };
@@ -59,11 +59,11 @@ function Dashboard() {
     setDraftValue(String(t[field]));
   };
   const deleteTransaction = (id: number) => {
-    setCardTrasactions(cardTransactions.filter((t) => t.id !== id));
+    setCardTransactions(cardTransactions.filter((t) => t.id !== id));
   };
   const saveTransaction = () => {
     if (editId === null || !editingField) return;
-    setCardTrasactions(
+    setCardTransactions(
       cardTransactions.map((elem) =>
         elem.id !== editId
           ? elem
@@ -128,44 +128,14 @@ function Dashboard() {
     <>
       <div className={styles.dashboardHeader}>
         <h2>Dashboard</h2>
-        <div className={styles.userLogin}>
-          {hasLogin ? (
-            <>
-              <p className={styles.userName}>{userLogin.name}</p>
-              <button onClick={logoutUser} className={styles.loginBtn}>
-                logout
-              </button>
-            </>
-          ) : (
-            <div>
-              <input
-                type="text"
-                placeholder="login"
-                value={userLogin.name}
-                onKeyDown={handelEnter}
-                className={styles.inputValue}
-                onChange={(e) =>
-                  setUserLogin((prev) => ({ ...prev, name: e.target.value }))
-                }
-              />
-              <input
-                type="password"
-                placeholder="password"
-                className={styles.inputValue}
-                onKeyDown={handelEnter}
-                onChange={(e) =>
-                  setUserLogin((prev) => ({
-                    ...prev,
-                    password: e.target.value,
-                  }))
-                }
-              />
-              <button onClick={authorizationUser} className={styles.loginBtn}>
-                authorization
-              </button>
-            </div>
-          )}
-        </div>
+        <DashboardHeaderAuth
+          hasLogin={hasLogin}
+          userLogin={userLogin}
+          handleEnter={handleEnter}
+          setUserLogin={setUserLogin}
+          handleLogin={handleLogin}
+          logoutUser={logoutUser}
+        />
       </div>
       <div className={styles.dashboardCard}>
         {cards.map((card) => (
