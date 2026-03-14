@@ -250,3 +250,23 @@ td {
   top: 10px;
   color: red;
 }
+.inputValue {
+  padding: 5px;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+.inputValue:first-of-type {
+  margin: 0;
+}
+
+.inputValue:last-of-type {
+  margin-right: 10px;
+}
+.loginBtn {
+  background: none;
+  padding: 6px;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px rgba(0, 0, 0, 0.452) solid;
+}

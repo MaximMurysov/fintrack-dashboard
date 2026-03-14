@@ -24,12 +24,35 @@ function StatCard({ title, value, icon, className }: StatCardProps) {
     </div>
   );
 }
+type Password = string;
+interface UserLogin {
+  name: string;
+  password: Password;
+}
 
 function Dashboard() {
   const [cardTransactions, setCardTrasactions] = useState(transactions);
   const [draftValue, setDraftValue] = useState<string>("");
   const [editId, setEditId] = useState<number | null>(null);
   const [editingField, setEditingField] = useState<null | EditableField>(null);
+  const [hasLogin, setHasLogin] = useState(false);
+  const [userLogin, setUserLogin] = useState<UserLogin>({
+    name: "",
+    password: "",
+  });
+  const handelEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      authorizationUser();
+    }
+  };
+  const authorizationUser = () => {
+    if (!userLogin.name.trim() || !userLogin.password.trim()) return;
+    setHasLogin(true);
+  };
+  const logoutUser = () => {
+    setHasLogin(false);
+    setUserLogin({ name: "", password: "" });
+  };
   const editTransaction = (t: Transactions, field: EditableField) => {
     setEditId(t.id);
     setEditingField(field);
@@ -106,8 +129,42 @@ function Dashboard() {
       <div className={styles.dashboardHeader}>
         <h2>Dashboard</h2>
         <div className={styles.userLogin}>
-          <p className={styles.userPhoto}></p>
-          <p className={styles.userName}>User User</p>
+          {hasLogin ? (
+            <>
+              <p className={styles.userName}>{userLogin.name}</p>
+              <button onClick={logoutUser} className={styles.loginBtn}>
+                logout
+              </button>
+            </>
+          ) : (
+            <div>
+              <input
+                type="text"
+                placeholder="login"
+                value={userLogin.name}
+                onKeyDown={handelEnter}
+                className={styles.inputValue}
+                onChange={(e) =>
+                  setUserLogin((prev) => ({ ...prev, name: e.target.value }))
+                }
+              />
+              <input
+                type="password"
+                placeholder="password"
+                className={styles.inputValue}
+                onKeyDown={handelEnter}
+                onChange={(e) =>
+                  setUserLogin((prev) => ({
+                    ...prev,
+                    password: e.target.value,
+                  }))
+                }
+              />
+              <button onClick={authorizationUser} className={styles.loginBtn}>
+                authorization
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.dashboardCard}>
