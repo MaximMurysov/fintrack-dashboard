@@ -1,19 +1,19 @@
 import styles from "./dashboard.module.css";
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import SpendingChart from "../SpendingChart";
-import { transactions, type Transactions } from "../../data/transactions";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import TransactionsTable from "./TransactionsTable";
 import DashboardHeaderAuth from "./DashboardHeaderAuth";
+import { transactionsTitle } from "../../types/types";
+import useTransactions from "../../hooks/useTransactions";
 interface StatCardProps {
   title: string;
   value: number;
   icon: ReactNode;
   className?: string;
 }
-export type EditableField = "date" | "description" | "category" | "amount";
 
 function StatCard({ title, value, icon, className }: StatCardProps) {
   return (
@@ -24,67 +24,25 @@ function StatCard({ title, value, icon, className }: StatCardProps) {
     </div>
   );
 }
-export type Password = string;
-export interface UserLogin {
-  name: string;
-  password: Password;
-}
 
 function Dashboard() {
-  const [cardTransactions, setCardTransactions] = useState(transactions);
-  const [draftValue, setDraftValue] = useState<string>("");
-  const [editId, setEditId] = useState<number | null>(null);
-  const [editingField, setEditingField] = useState<null | EditableField>(null);
-  const [hasLogin, setHasLogin] = useState(false);
-  const [userLogin, setUserLogin] = useState<UserLogin>({
-    name: "",
-    password: "",
-  });
-  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleLogin();
-    }
-  };
-  const handleLogin = () => {
-    if (!userLogin.name.trim() || !userLogin.password.trim()) return;
-    setHasLogin(true);
-  };
-  const logoutUser = () => {
-    setHasLogin(false);
-    setUserLogin({ name: "", password: "" });
-  };
-  const editTransaction = (t: Transactions, field: EditableField) => {
-    setEditId(t.id);
-    setEditingField(field);
-    setDraftValue(String(t[field]));
-  };
-  const deleteTransaction = (id: number) => {
-    setCardTransactions(cardTransactions.filter((t) => t.id !== id));
-  };
-  const saveTransaction = () => {
-    if (editId === null || !editingField) return;
-    setCardTransactions(
-      cardTransactions.map((elem) =>
-        elem.id !== editId
-          ? elem
-          : {
-              ...elem,
-              [editingField]:
-                editingField === "amount" ? Number(draftValue) : draftValue,
-            },
-      ),
-    );
-    setEditId(null);
-    setDraftValue("");
-    setEditingField(null);
-  };
-
-  const cancelTransaction = () => {
-    setEditId(null);
-    setEditingField(null);
-    setDraftValue("");
-  };
-
+  const {
+    cardTransactions,
+    userLogin,
+    draftValue,
+    editId,
+    editingField,
+    hasLogin,
+    setDraftValue,
+    editTransaction,
+    deleteTransaction,
+    saveTransaction,
+    cancelTransaction,
+    setUserLogin,
+    handleEnter,
+    handleLogin,
+    logoutUser,
+  } = useTransactions();
   const totalSum = cardTransactions.reduce(
     (acc, price) => (acc += price.amount),
     0,
@@ -120,7 +78,6 @@ function Dashboard() {
     },
   ];
 
-  const transactionsTitle = ["Date", "Description", "Category", "Amount"];
   const spendingData = cardTransactions
     .filter((elem) => elem.amount < 0)
     .map((elem) => ({ date: elem.date, amount: Math.abs(elem.amount) }));

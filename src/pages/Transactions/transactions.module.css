@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.transactionsHeader {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  align-items: center;
+  margin-bottom: 50px;
+  background-color: white;
+  padding: 0px 40px;
+}
+.addTransaction {
+  background: white;
+  height: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 40px;
+  margin-bottom: 30px;
+  align-items: center;
+}
+.addBtn {
+  padding: 13px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  background-color: #3f51b5;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+}
+.inputValues {
+  display: flex;
+  gap: 10px;
+}
+.inputValue {
+  padding: 10px 30px;
+  border-radius: 5px;
+  border: none;
+  background-color: gainsboro;
+  color: #4b5563;
+}

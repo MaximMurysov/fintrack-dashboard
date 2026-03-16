@@ -1,51 +1,98 @@
 import styles from "./transactions.module.css";
 import { useState } from "react";
-import type { EditableField } from "../Dashoboard/Dashboard";
-import TransactionsTable from "../Dashoboard/TransactionsTable";
-import { transactions } from "../../data/transactions";
+import TransactionsTable from "../Dashboard/TransactionsTable";
 import type { Transactions } from "../../data/transactions";
+import DashboardHeaderAuth from "../Dashboard/DashboardHeaderAuth";
+
+import type { NewTransaction } from "../../types/types";
+import useTransactions from "../../hooks/useTransactions";
 function Transactions() {
-  const [cardTransactions, setCardTransactions] = useState(transactions);
-  const [draftValue, setDraftValue] = useState<string>("");
-  const [editId, setEditId] = useState<number | null>(null);
-  const [editingField, setEditingField] = useState<null | EditableField>(null);
-
-  const editTransaction = (t: Transactions, field: EditableField) => {
-    setEditId(t.id);
-    setEditingField(field);
-    setDraftValue(String(t[field]));
+  const [newTransaction, setNewTransaction] = useState<NewTransaction>({
+    date: "",
+    description: "",
+    category: "",
+    amount: "",
+  });
+  const transactionFields = [
+    "date",
+    "description",
+    "category",
+    "amount",
+  ] as const;
+  const handleAddTransaction = () => {
+    if (
+      !newTransaction.date.trim() ||
+      !newTransaction.description.trim() ||
+      !newTransaction.category.trim() ||
+      !newTransaction.amount.trim()
+    )
+      return;
+    const newId = Math.max(...cardTransactions.map((t) => t.id)) + 1;
+    const addNewTransaction = {
+      id: newId,
+      date: newTransaction.date,
+      description: newTransaction.description,
+      category: newTransaction.category,
+      amount: Number(newTransaction.amount),
+    };
+    setCardTransactions([addNewTransaction, ...cardTransactions]);
+    setNewTransaction({ date: "", description: "", category: "", amount: "" });
   };
-  const deleteTransaction = (id: number) => {
-    setCardTransactions(cardTransactions.filter((t) => t.id !== id));
-  };
-  const saveTransaction = () => {
-    if (editId === null || !editingField) return;
-    setCardTransactions(
-      cardTransactions.map((elem) =>
-        elem.id !== editId
-          ? elem
-          : {
-              ...elem,
-              [editingField]:
-                editingField === "amount" ? Number(draftValue) : draftValue,
-            },
-      ),
-    );
-    setEditId(null);
-    setDraftValue("");
-    setEditingField(null);
-  };
-
-  const cancelTransaction = () => {
-    setEditId(null);
-    setEditingField(null);
-    setDraftValue("");
-  };
+  const {
+    cardTransactions,
+    userLogin,
+    draftValue,
+    editId,
+    editingField,
+    hasLogin,
+    setDraftValue,
+    editTransaction,
+    deleteTransaction,
+    saveTransaction,
+    cancelTransaction,
+    setCardTransactions,
+    setUserLogin,
+    handleEnter,
+    handleLogin,
+    logoutUser,
+  } = useTransactions();
 
   const transactionsTitle = ["Date", "Description", "Category", "Amount"];
+
   return (
-    <div className={styles.transactionsHeader}>
-      <h2>History transaction</h2>
+    <div>
+      <div className={styles.transactionsHeader}>
+        <h2 className={styles.transactionsTitle}>Transaction</h2>
+        <DashboardHeaderAuth
+          hasLogin={hasLogin}
+          userLogin={userLogin}
+          handleEnter={handleEnter}
+          setUserLogin={setUserLogin}
+          handleLogin={handleLogin}
+          logoutUser={logoutUser}
+        />
+      </div>
+
+      <div className={styles.addTransaction}>
+        <h1>Transaction</h1>
+        <div className={styles.inputValues}>
+          {transactionFields.map((elem) => (
+            <input
+              type="text"
+              placeholder={elem}
+              className={styles.inputValue}
+              value={newTransaction[elem]}
+              onChange={(e) =>
+                setNewTransaction({ ...newTransaction, [elem]: e.target.value })
+              }
+            />
+          ))}
+        </div>
+        <button className={styles.addBtn} onClick={handleAddTransaction}>
+          Add transaction
+        </button>
+      </div>
+
       <TransactionsTable
         transactionsTitle={transactionsTitle}
         editId={editId}

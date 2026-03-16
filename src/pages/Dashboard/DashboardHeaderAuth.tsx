@@ -1,7 +1,7 @@
 import styles from "./dashboard.module.css";
 
 import type { UserLogin } from "./Dashboard";
-interface DashboardHeaderAuthProps {
+export interface DashboardHeaderAuthProps {
   hasLogin: boolean;
   userLogin: UserLogin;
   handleEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -22,6 +22,7 @@ function DashboardHeaderAuth({
     <div className={styles.userLogin}>
       {hasLogin ? (
         <>
+          <p className={styles.userPhoto}></p>
           <p className={styles.userName}>{userLogin.name}</p>
           <button onClick={logoutUser} className={styles.loginBtn}>
             logout
