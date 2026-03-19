@@ -1,10 +1,4 @@
-export interface Transactions {
-  id: number;
-  date: string;
-  description: string;
-  category: string;
-  amount: number;
-}
+import type { Transactions } from "../types/types";
 export const transactions: Transactions[] = [
   {
     id: 1,
@@ -56,3 +50,4 @@ export const transactions: Transactions[] = [
     amount: -22,
   },
 ];
+export const transactionsTitle = ["Date", "Description", "Category", "Amount"];

@@ -1,23 +1,22 @@
 import styles from "./dashboard.module.css";
 
-import type { UserLogin } from "./Dashboard";
+import type { UserLogin } from "../../types/types";
 export interface DashboardHeaderAuthProps {
   hasLogin: boolean;
   userLogin: UserLogin;
-  handleEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   setUserLogin: React.Dispatch<React.SetStateAction<UserLogin>>;
-  handleLogin: () => void;
   logoutUser: () => void;
+  handleLogin: () => void;
 }
 
 function DashboardHeaderAuth({
   hasLogin,
   userLogin,
-  handleEnter,
   setUserLogin,
-  handleLogin,
   logoutUser,
+  handleLogin,
 }: DashboardHeaderAuthProps) {
+  if (!userLogin) return null;
   return (
     <div className={styles.userLogin}>
       {hasLogin ? (
@@ -34,7 +33,6 @@ function DashboardHeaderAuth({
             type="text"
             placeholder="login"
             value={userLogin.name}
-            onKeyDown={handleEnter}
             className={styles.inputValue}
             onChange={(e) =>
               setUserLogin((prev) => ({ ...prev, name: e.target.value }))
@@ -44,7 +42,6 @@ function DashboardHeaderAuth({
             type="password"
             placeholder="password"
             className={styles.inputValue}
-            onKeyDown={handleEnter}
             onChange={(e) =>
               setUserLogin((prev) => ({
                 ...prev,
@@ -52,7 +49,7 @@ function DashboardHeaderAuth({
               }))
             }
           />
-          <button onClick={handleLogin} className={styles.loginBtn}>
+          <button className={styles.loginBtn} onClick={handleLogin}>
             authorization
           </button>
         </div>

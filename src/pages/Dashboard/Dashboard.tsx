@@ -6,8 +6,11 @@ import { MdAccountBalanceWallet } from "react-icons/md";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import TransactionsTable from "./TransactionsTable";
 import DashboardHeaderAuth from "./DashboardHeaderAuth";
-import { transactionsTitle } from "../../types/types";
 import useTransactions from "../../hooks/useTransactions";
+import { transactionsTitle } from "../../data/transactions";
+import { useContext } from "react";
+import { LoginContext } from "../../components/LoginContext/LoginContext";
+
 interface StatCardProps {
   title: string;
   value: number;
@@ -28,20 +31,14 @@ function StatCard({ title, value, icon, className }: StatCardProps) {
 function Dashboard() {
   const {
     cardTransactions,
-    userLogin,
     draftValue,
     editId,
     editingField,
-    hasLogin,
     setDraftValue,
     editTransaction,
     deleteTransaction,
     saveTransaction,
     cancelTransaction,
-    setUserLogin,
-    handleEnter,
-    handleLogin,
-    logoutUser,
   } = useTransactions();
   const totalSum = cardTransactions.reduce(
     (acc, price) => (acc += price.amount),
@@ -81,17 +78,19 @@ function Dashboard() {
   const spendingData = cardTransactions
     .filter((elem) => elem.amount < 0)
     .map((elem) => ({ date: elem.date, amount: Math.abs(elem.amount) }));
+  const context = useContext(LoginContext);
+  if (!context) return null;
+  const { user, setUser, hasLogin, logout, handleLogin } = context;
   return (
     <>
       <div className={styles.dashboardHeader}>
         <h2>Dashboard</h2>
         <DashboardHeaderAuth
           hasLogin={hasLogin}
-          userLogin={userLogin}
-          handleEnter={handleEnter}
-          setUserLogin={setUserLogin}
+          userLogin={user}
+          setUserLogin={setUser}
+          logoutUser={logout}
           handleLogin={handleLogin}
-          logoutUser={logoutUser}
         />
       </div>
       <div className={styles.dashboardCard}>

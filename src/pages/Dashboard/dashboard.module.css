@@ -254,6 +254,7 @@ td {
   padding: 5px;
   margin-left: 10px;
   border-radius: 5px;
+  border: 1px rgba(0, 0, 0, 0.589) solid;
 }
 .inputValue:first-of-type {
   margin: 0;

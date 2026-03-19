@@ -1,9 +1,11 @@
 import styles from "./transactions.module.css";
 import { useState } from "react";
+import { useContext } from "react";
+import { LoginContext } from "../../components/LoginContext/LoginContext";
 import TransactionsTable from "../Dashboard/TransactionsTable";
-import type { Transactions } from "../../data/transactions";
+import type { Transactions } from "../../types/types";
 import DashboardHeaderAuth from "../Dashboard/DashboardHeaderAuth";
-
+import { transactionsTitle } from "../../data/transactions";
 import type { NewTransaction } from "../../types/types";
 import useTransactions from "../../hooks/useTransactions";
 function Transactions() {
@@ -40,36 +42,29 @@ function Transactions() {
   };
   const {
     cardTransactions,
-    userLogin,
     draftValue,
     editId,
     editingField,
-    hasLogin,
     setDraftValue,
     editTransaction,
     deleteTransaction,
     saveTransaction,
     cancelTransaction,
     setCardTransactions,
-    setUserLogin,
-    handleEnter,
-    handleLogin,
-    logoutUser,
   } = useTransactions();
 
-  const transactionsTitle = ["Date", "Description", "Category", "Amount"];
-
+  const context = useContext(LoginContext);
+  if (!context) return null;
+  const { user, setUser, hasLogin, logout } = context;
   return (
     <div>
       <div className={styles.transactionsHeader}>
         <h2 className={styles.transactionsTitle}>Transaction</h2>
         <DashboardHeaderAuth
           hasLogin={hasLogin}
-          userLogin={userLogin}
-          handleEnter={handleEnter}
-          setUserLogin={setUserLogin}
-          handleLogin={handleLogin}
-          logoutUser={logoutUser}
+          userLogin={user}
+          setUserLogin={setUser}
+          logoutUser={logout}
         />
       </div>
 
