@@ -7,7 +7,9 @@ import type { Transactions } from "../../types/types";
 import DashboardHeaderAuth from "../Dashboard/DashboardHeaderAuth";
 import { transactionsTitle } from "../../data/transactions";
 import type { NewTransaction } from "../../types/types";
-import useTransactions from "../../hooks/useTransactions";
+
+import { TransactionsContext } from "../../components/TransactionContext/TransactionsContext";
+
 function Transactions() {
   const [newTransaction, setNewTransaction] = useState<NewTransaction>({
     date: "",
@@ -40,6 +42,11 @@ function Transactions() {
     setCardTransactions([addNewTransaction, ...cardTransactions]);
     setNewTransaction({ date: "", description: "", category: "", amount: "" });
   };
+
+  const context = useContext(LoginContext);
+  const transactionContext = useContext(TransactionsContext);
+  if (!context || !transactionContext) return null;
+  const { user, setUser, hasLogin, logout, handleLogin } = context;
   const {
     cardTransactions,
     draftValue,
@@ -51,11 +58,7 @@ function Transactions() {
     saveTransaction,
     cancelTransaction,
     setCardTransactions,
-  } = useTransactions();
-
-  const context = useContext(LoginContext);
-  if (!context) return null;
-  const { user, setUser, hasLogin, logout } = context;
+  } = transactionContext;
   return (
     <div>
       <div className={styles.transactionsHeader}>
@@ -65,6 +68,7 @@ function Transactions() {
           userLogin={user}
           setUserLogin={setUser}
           logoutUser={logout}
+          handleLogin={handleLogin}
         />
       </div>
 
@@ -88,18 +92,27 @@ function Transactions() {
         </button>
       </div>
 
-      <TransactionsTable
-        transactionsTitle={transactionsTitle}
-        editId={editId}
-        editingField={editingField}
-        draftValue={draftValue}
-        setDraftValue={setDraftValue}
-        saveTransaction={saveTransaction}
-        cancelTransaction={cancelTransaction}
-        editTransaction={editTransaction}
-        deleteTransaction={deleteTransaction}
-        cardTransactions={cardTransactions}
-      />
+      <div className={styles.recentTransactions}>
+        <div className={styles.recentTransactionsContainer}>
+          <div className={styles.recentHeader}>
+            <h2 className={styles.recentTitle}>Recent Transactions</h2>
+            <button className={styles.viewAll}>View All</button>
+          </div>
+
+          <TransactionsTable
+            transactionsTitle={transactionsTitle}
+            editId={editId}
+            editingField={editingField}
+            draftValue={draftValue}
+            setDraftValue={setDraftValue}
+            saveTransaction={saveTransaction}
+            cancelTransaction={cancelTransaction}
+            editTransaction={editTransaction}
+            deleteTransaction={deleteTransaction}
+            cardTransactions={cardTransactions}
+          />
+        </div>
+      </div>
     </div>
   );
 }

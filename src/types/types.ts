@@ -1,3 +1,5 @@
+import type useTransaction from "../hooks/useTransactions";
+
 export interface NewTransaction {
   date: string;
   description: string;
@@ -27,3 +29,4 @@ export type LoginContextType = {
   logout: () => void;
   handleLogin: () => void;
 };
+export type TransactionsContextType = ReturnType<typeof useTransaction>;

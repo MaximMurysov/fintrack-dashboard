@@ -2,8 +2,8 @@ import styles from "./dashboard.module.css";
 import { MdOutlineEdit } from "react-icons/md";
 import { ImCheckmark } from "react-icons/im";
 import { MdCancelPresentation } from "react-icons/md";
-import type { EditableField } from "./Dashboard";
-import type { Transactions } from "../../data/transactions";
+import type { EditableField } from "../../types/types";
+import type { Transactions } from "../../types/types";
 interface TransactionsTableProps {
   transactionsTitle: string[];
   editId: null | number;

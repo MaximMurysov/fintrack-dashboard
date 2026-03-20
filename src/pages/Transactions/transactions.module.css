@@ -44,3 +44,23 @@
   background-color: gainsboro;
   color: #4b5563;
 }
+.recentTransactions {
+  padding: 0px 40px;
+  margin-bottom: 50px;
+}
+.recentTransactionsContainer {
+  min-height: 300px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px 40px;
+}
+.recentTitle {
+  margin-bottom: 20px;
+}
+
+.recentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
