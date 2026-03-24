@@ -12,7 +12,7 @@ interface TransactionsTableProps {
   setDraftValue: (e: string) => void;
   saveTransaction: () => void;
   cancelTransaction: () => void;
-  editTransaction: (t: Transactions, field: EditableField) => void;
+  editTransaction: (t: TransactionsType, field: EditableField) => void;
   deleteTransaction: (id: number) => void;
   cardTransactions: TransactionsType[];
 }
