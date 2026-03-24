@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useContext } from "react";
 import { LoginContext } from "../../components/LoginContext/LoginContext";
 import TransactionsTable from "../Dashboard/TransactionsTable";
-import type { Transactions } from "../../types/types";
 import DashboardHeaderAuth from "../Dashboard/DashboardHeaderAuth";
 import { transactionsTitle } from "../../data/transactions";
 import type { NewTransaction } from "../../types/types";

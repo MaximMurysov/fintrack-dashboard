@@ -6,7 +6,7 @@ export interface NewTransaction {
   category: string;
   amount: string;
 }
-export interface Transactions {
+export interface TransactionsType {
   id: number;
   date: string;
   description: string;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { transactions } from "../data/transactions";
 import type Transactions from "../pages/Transactions/Transactions";
-import type { EditableField } from "../types/types";
+import type { EditableField, TransactionsType } from "../types/types";
 
 function useTransaction() {
   const [cardTransactions, setCardTransactions] = useState(transactions);
@@ -9,7 +9,7 @@ function useTransaction() {
   const [editId, setEditId] = useState<number | null>(null);
   const [editingField, setEditingField] = useState<null | EditableField>(null);
 
-  const editTransaction = (t: Transactions, field: EditableField) => {
+  const editTransaction = (t: TransactionsType, field: EditableField) => {
     setEditId(t.id);
     setEditingField(field);
     setDraftValue(String(t[field]));
