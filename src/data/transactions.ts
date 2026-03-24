@@ -1,5 +1,5 @@
-import type { Transactions } from "../types/types";
-export const transactions: Transactions[] = [
+import type { TransactionsType } from "../types/types";
+export const transactions: TransactionsType[] = [
   {
     id: 1,
     date: "Mar 08",

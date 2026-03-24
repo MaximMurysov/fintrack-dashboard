@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { transactions } from "../data/transactions";
-import type Transactions from "../pages/Transactions/Transactions";
 import type { EditableField, TransactionsType } from "../types/types";
 
 function useTransaction() {

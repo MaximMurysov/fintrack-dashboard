@@ -3,7 +3,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { ImCheckmark } from "react-icons/im";
 import { MdCancelPresentation } from "react-icons/md";
 import type { EditableField } from "../../types/types";
-import type { Transactions } from "../../types/types";
+import type { TransactionsType } from "../../types/types";
 interface TransactionsTableProps {
   transactionsTitle: string[];
   editId: null | number;
@@ -14,7 +14,7 @@ interface TransactionsTableProps {
   cancelTransaction: () => void;
   editTransaction: (t: Transactions, field: EditableField) => void;
   deleteTransaction: (id: number) => void;
-  cardTransactions: Transactions[];
+  cardTransactions: TransactionsType[];
 }
 
 function TransactionsTable({
