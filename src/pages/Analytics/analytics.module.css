@@ -1,0 +1,112 @@
+.analyticsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.analyticsHeader {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  align-items: center;
+  margin-bottom: 50px;
+  background-color: white;
+  padding: 0px 40px;
+  position: relative;
+}
+.topCategories {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.topCategoriesItems {
+  display: flex;
+  justify-content: space-around;
+  margin: 0px 40px;
+  border: 1px black solid;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+.logo1 {
+  font-size: 85px;
+  color: orange;
+  background-color: rgba(255, 166, 0, 0.39);
+  border-radius: 50%;
+  padding: 10px;
+}
+.logo2 {
+  font-size: 85px;
+  color: red;
+  background-color: rgba(255, 0, 0, 0.411);
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.sectionFirst {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.total {
+  font-size: 35px;
+  color: #2c335d;
+  font-weight: bold;
+}
+.line {
+  height: 80px;
+  border: 1px #2c335d52 solid;
+}
+.sectionSecond {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sectionSecondResult {
+  font-size: 35px;
+  font-weight: bold;
+}
+.AnalyticsChart {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 950px;
+  margin: 0px 40px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.AnalyticsChartTitle {
+  position: relative;
+  top: 85px;
+  display: flex;
+  justify-content: center;
+  color: #2c335d;
+}
+
+.analyticsCategotySection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.icon {
+  width: 10px;
+  height: 10px;
+  left: 10px;
+}
+.analyticsCategotyItems {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 30px;
+  color: #2c335d;
+}

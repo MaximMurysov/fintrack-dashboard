@@ -1,24 +1,17 @@
 import styles from "./dashboard.module.css";
-import { type ReactNode } from "react";
-import SpendingChart from "../SpendingChart";
+import SpendingChart from "./SpendingChart";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import TransactionsTable from "./TransactionsTable";
 import DashboardHeaderAuth from "./DashboardHeaderAuth";
 import { transactionsTitle } from "../../data/transactions";
-import { useContext } from "react";
-import { LoginContext } from "../../components/LoginContext/LoginContext";
-import { TransactionsContext } from "../../components/TransactionContext/TransactionsContext";
+import type { StatCardProps } from "../../types/types";
 
-interface StatCardProps {
-  title: string;
-  value: number;
-  icon: ReactNode;
-  className?: string;
-}
+import { useLogin } from "../../hooks/useLogin";
+import { useTransaction } from "../../hooks/useTransaction";
 
-function StatCard({ title, value, icon, className }: StatCardProps) {
+export function StatCard({ title, value, icon, className }: StatCardProps) {
   return (
     <div className={className}>
       <h2>{title}</h2>
@@ -29,10 +22,7 @@ function StatCard({ title, value, icon, className }: StatCardProps) {
 }
 
 function Dashboard() {
-  const context = useContext(LoginContext);
-  const transactionContext = useContext(TransactionsContext);
-  if (!context || !transactionContext) return null;
-  const { user, setUser, hasLogin, logout, handleLogin } = context;
+  const { user, setUser, hasLogin, logout, handleLogin } = useLogin();
   const {
     cardTransactions,
     draftValue,
@@ -43,7 +33,7 @@ function Dashboard() {
     deleteTransaction,
     saveTransaction,
     cancelTransaction,
-  } = transactionContext;
+  } = useTransaction();
 
   const totalSum = cardTransactions.reduce(
     (acc, price) => (acc += price.amount),

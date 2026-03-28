@@ -1,5 +1,5 @@
 import type useTransaction from "../hooks/useTransactions";
-
+import type { ReactNode } from "react";
 export interface NewTransaction {
   date: string;
   description: string;
@@ -30,3 +30,13 @@ export type LoginContextType = {
   handleLogin: () => void;
 };
 export type TransactionsContextType = ReturnType<typeof useTransaction>;
+
+export interface StatCardProps {
+  title: string;
+  value: number;
+  icon: ReactNode;
+  className?: string;
+}
+export type AnalyticContextType = {
+  prepareChartData: (arr: TransactionsType[]) => void;
+};

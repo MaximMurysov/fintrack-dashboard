@@ -1,13 +1,11 @@
 import styles from "./transactions.module.css";
 import { useState } from "react";
-import { useContext } from "react";
-import { LoginContext } from "../../components/LoginContext/LoginContext";
 import TransactionsTable from "../Dashboard/TransactionsTable";
 import DashboardHeaderAuth from "../Dashboard/DashboardHeaderAuth";
 import { transactionsTitle } from "../../data/transactions";
 import type { NewTransaction } from "../../types/types";
-
-import { TransactionsContext } from "../../components/TransactionContext/TransactionsContext";
+import { useTransaction } from "../../hooks/useTransaction";
+import { useLogin } from "../../hooks/useLogin";
 
 function Transactions() {
   const [newTransaction, setNewTransaction] = useState<NewTransaction>({
@@ -42,10 +40,7 @@ function Transactions() {
     setNewTransaction({ date: "", description: "", category: "", amount: "" });
   };
 
-  const context = useContext(LoginContext);
-  const transactionContext = useContext(TransactionsContext);
-  if (!context || !transactionContext) return null;
-  const { user, setUser, hasLogin, logout, handleLogin } = context;
+  const { user, setUser, hasLogin, logout, handleLogin } = useLogin();
   const {
     cardTransactions,
     draftValue,
@@ -57,7 +52,7 @@ function Transactions() {
     saveTransaction,
     cancelTransaction,
     setCardTransactions,
-  } = transactionContext;
+  } = useTransaction();
   return (
     <div>
       <div className={styles.transactionsHeader}>

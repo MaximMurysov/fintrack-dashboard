@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Analytics from "./pages/Analytics";
+import Analytics from "./pages/Analytics/Analytics";
 import Transactions from "./pages/Transactions/Transactions";
-import Settings from "./pages/Settings";
+import Settings from "./pages/Settings/Settings";
 import Layout from "./components/Layout";
 import { LoginProvider } from "./components/LoginContext/LoginContext";
 import TransactionsProvider from "./components/TransactionContext/TransactionProvider";
