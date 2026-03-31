@@ -9,7 +9,7 @@ import { transactionsTitle } from "../../data/transactions";
 import type { StatCardProps } from "../../types/types";
 
 import { useLogin } from "../../hooks/useLogin";
-import { useTransaction } from "../../hooks/useTransaction";
+import { useTransaction } from "../../hooks/useTransactionContext";
 
 export function StatCard({ title, value, icon, className }: StatCardProps) {
   return (

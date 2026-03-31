@@ -40,3 +40,7 @@ export interface StatCardProps {
 export type AnalyticContextType = {
   prepareChartData: (arr: TransactionsType[]) => void;
 };
+export type ChartDataItem = {
+  name: string;
+  value: number;
+};

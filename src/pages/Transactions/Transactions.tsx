@@ -4,7 +4,7 @@ import TransactionsTable from "../Dashboard/TransactionsTable";
 import DashboardHeaderAuth from "../Dashboard/DashboardHeaderAuth";
 import { transactionsTitle } from "../../data/transactions";
 import type { NewTransaction } from "../../types/types";
-import { useTransaction } from "../../hooks/useTransaction";
+import { useTransaction } from "../../hooks/useTransactionContext";
 import { useLogin } from "../../hooks/useLogin";
 
 function Transactions() {

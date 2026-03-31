@@ -6,7 +6,7 @@ interface Category {
 }
 interface TopCategoriesProps {
   total: number;
-  topCategorie: Category;
+  topCategory: Category;
   percent: number;
   smallest: Category;
   minPercent: number;
@@ -14,7 +14,7 @@ interface TopCategoriesProps {
 
 export function TopCategories({
   total,
-  topCategorie,
+  topCategory,
   percent,
   smallest,
   minPercent,
@@ -30,7 +30,7 @@ export function TopCategories({
         <div className={styles.sectionSecond}>
           <h2>Top category</h2>
           <p className={styles.sectionSecondResult}>
-            {topCategorie.name}: {percent}%
+            {topCategory.name}: {percent}%
           </p>
         </div>
       </div>
@@ -38,7 +38,7 @@ export function TopCategories({
         <div className={styles.sectionSecond}>
           <h2>Top category</h2>
           <p className={styles.sectionSecondResult}>
-            {topCategorie.name}: {percent}%
+            {topCategory.name}: {percent}%
           </p>
         </div>
         <MdShoppingBag className={styles.logo1} />

@@ -8,7 +8,7 @@ export function AnalyticsChart() {
 
   return (
     <div>
-      <PieChart width={700} height={700}>
+      <PieChart width={600} height={600}>
         <Pie
           data={data}
           innerRadius={120}
