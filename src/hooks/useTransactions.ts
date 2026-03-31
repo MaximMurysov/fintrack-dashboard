@@ -40,9 +40,41 @@ function useTransaction() {
     setDraftValue("");
   };
 
+  const stats = cardTransactions.reduce(
+    (acc, transaction) => {
+      acc.total += transaction.amount;
+      
+      if (transaction.amount > 0) {
+        acc.income += transaction.amount;
+      } else {
+        acc.expenses += Math.abs(transaction.amount);
+        acc.spendingData.push({
+          date: transaction.date,
+          amount: Math.abs(transaction.amount)
+        });
+      }
+      
+      return acc;
+    },
+    { 
+      total: 0, 
+      income: 0, 
+      expenses: 0,
+      spendingData: [] as { date: string; amount: number }[]
+    }
+  );
+
+  const totalSum = stats.total;
+  const incomeSum = stats.income;
+  const expensesSum = stats.expenses;
+  const spendingData = stats.spendingData;
+
   return {
     cardTransactions,
-
+    totalSum,
+    incomeSum,
+    expensesSum,
+    spendingData,
     draftValue,
     editId,
     editingField,

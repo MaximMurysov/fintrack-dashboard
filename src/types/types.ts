@@ -12,6 +12,7 @@ export interface TransactionsType {
   description: string;
   category: string;
   amount: number;
+  color?: string;
 }
 
 export type EditableField = "date" | "description" | "category" | "amount";
@@ -43,4 +44,5 @@ export type AnalyticContextType = {
 export type ChartDataItem = {
   name: string;
   value: number;
+  color: string;
 };

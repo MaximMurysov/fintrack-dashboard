@@ -4,14 +4,19 @@ import { prepareChartData } from "../components/PrepareCharData";
 export function useTopCategory(transactions: TransactionsType[]) {
   const data = prepareChartData(transactions);
   const total = data.reduce((sum, item) => sum + item.value, 0);
-  const topCategory = data.reduce((max, item) =>
+  const chartData = data.map(item => ({
+    ...item,
+    percent: total ? Math.round((item.value / total) * 100) : 0
+  }));
+  const topCategory = chartData.reduce((max, item) =>
     item.value > max.value ? item : max,
   );
-  const percent = total ? Math.round((topCategory.value / total) * 100) : 0;
-  const smallest = data.reduce((min, item) =>
+  const smallest = chartData.reduce((min, item) =>
     min.value < item.value ? min : item,
   );
-  const minPercent = total ? Math.round((smallest.value / total) * 100) : 0;
 
-  return { data, total, topCategory, smallest, percent, minPercent };
+  const percent = topCategory.percent || 0;
+  const minPercent = smallest.percent || 0;
+
+  return { data: chartData, total, topCategory, smallest, percent, minPercent };
 }

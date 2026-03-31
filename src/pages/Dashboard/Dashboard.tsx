@@ -33,19 +33,12 @@ function Dashboard() {
     deleteTransaction,
     saveTransaction,
     cancelTransaction,
+    totalSum,
+    incomeSum,
+    expensesSum,
+    spendingData,
   } = useTransaction();
 
-  const totalSum = cardTransactions.reduce(
-    (acc, price) => (acc += price.amount),
-    0,
-  );
-  const incomeSum = cardTransactions
-    .filter((elem) => elem.amount > 0)
-    .reduce((acc, price) => (acc += price.amount), 0);
-
-  const expensesSum = cardTransactions
-    .filter((elem) => elem.amount < 0)
-    .reduce((acc, price) => (acc += Math.abs(price.amount)), 0);
   const cards = [
     {
       id: 1,
@@ -69,10 +62,6 @@ function Dashboard() {
       className: styles.cardExpense,
     },
   ];
-
-  const spendingData = cardTransactions
-    .filter((elem) => elem.amount < 0)
-    .map((elem) => ({ date: elem.date, amount: Math.abs(elem.amount) }));
 
   return (
     <>

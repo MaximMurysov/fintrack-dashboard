@@ -28,7 +28,7 @@ export function TopCategories({
         </div>
         <p className={styles.line}></p>
         <div className={styles.sectionSecond}>
-          <h2>Top category</h2>
+          <h2>Highest spending</h2>
           <p className={styles.sectionSecondResult}>
             {topCategory.name}: {percent}%
           </p>

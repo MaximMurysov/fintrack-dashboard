@@ -5,6 +5,8 @@ import { TopCategories } from "./components/TopCategories";
 import { AnalyticsCategory } from "./components/AnalyticsCategory";
 import { useTopCategory } from "./hooks/useTopCategory";
 import { transactions } from "../../data/transactions";
+import { AnalyticChartPart2 } from "./components/ExpensesBarChart";
+import { TopCategoriesItems } from "./components/TopCategoriesItems";
 
 function Analytics() {
   const { handleLogin, user, hasLogin, setUser, logout } = useLogin();
@@ -23,6 +25,7 @@ function Analytics() {
           handleLogin={handleLogin}
         />
       </div>
+
       <TopCategories
         total={total}
         topCategory={topCategory}
@@ -30,7 +33,13 @@ function Analytics() {
         smallest={smallest}
         minPercent={minPercent}
       />
-      <AnalyticsCategory data={data} total={total} />
+      <section className={styles.analyticsBody}>
+        <AnalyticsCategory data={data} />
+        <div className={styles.rightColumn}>
+          <AnalyticChartPart2 data={data} />
+          <TopCategoriesItems data={data} />
+        </div>
+      </section>
     </div>
   );
 }

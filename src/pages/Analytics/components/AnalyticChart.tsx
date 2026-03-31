@@ -1,11 +1,11 @@
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
-import { transactions } from "../../../data/transactions";
-import { prepareChartData } from "./PrepareCharData";
-const COLORS = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"];
 
-export function AnalyticsChart() {
-  const data = prepareChartData(transactions);
+import type { ChartDataItem } from "../../../types/types";
 
+interface AnalyticsChartProps {
+  data: ChartDataItem[];
+}
+export function AnalyticsChart({ data }: AnalyticsChartProps) {
   return (
     <div>
       <PieChart width={600} height={600}>
@@ -18,8 +18,8 @@ export function AnalyticsChart() {
           outerRadius={200}
           dataKey="value"
         >
-          {data.map((_, index) => (
-            <Cell key={index} fill={COLORS[index % COLORS.length]} />
+          {data.map((item) => (
+            <Cell key={item.name} fill={item.color} />
           ))}
         </Pie>
         <Tooltip />
