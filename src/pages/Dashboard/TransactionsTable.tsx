@@ -4,6 +4,7 @@ import { ImCheckmark } from "react-icons/im";
 import { MdCancelPresentation } from "react-icons/md";
 import type { EditableField } from "../../types/types";
 import type { TransactionsType } from "../../types/types";
+import { useDisplayPreferences } from "../../hooks/useDisplayPreferences";
 interface TransactionsTableProps {
   transactionsTitle: string[];
   editId: null | number;
@@ -29,6 +30,7 @@ function TransactionsTable({
   deleteTransaction,
   cardTransactions,
 }: TransactionsTableProps) {
+  const { formatSignedAmount } = useDisplayPreferences();
   return (
     <table className={styles.transactionsTable}>
       <thead>
@@ -165,9 +167,7 @@ function TransactionsTable({
                   </>
                 ) : (
                   <>
-                    {elem.amount > 0
-                      ? `$${elem.amount}`
-                      : `-$${Math.abs(elem.amount)}`}
+                    {formatSignedAmount(elem.amount)}
                     <button
                       className={styles.edit}
                       onClick={() => editTransaction(elem, "amount")}

@@ -1,5 +1,6 @@
 import styles from "../analytics.module.css";
 import { MdShoppingBag } from "react-icons/md";
+import { useDisplayPreferences } from "../../../hooks/useDisplayPreferences";
 interface Category {
   name: string;
   value: number;
@@ -19,12 +20,15 @@ export function TopCategories({
   smallest,
   minPercent,
 }: TopCategoriesProps) {
+  const { currencySymbol, formatPositiveAmount } = useDisplayPreferences();
   return (
     <section className={styles.topCategories}>
       <div className={styles.topCategoriesItems}>
         <div className={styles.sectionFirst}>
           <h2>Total spent</h2>
-          <p className={styles.total}>$ {total.toLocaleString()}</p>
+          <p className={styles.total}>
+            {currencySymbol} {formatPositiveAmount(total)}
+          </p>
         </div>
         <p className={styles.line}></p>
         <div className={styles.sectionSecond}>

@@ -10,12 +10,16 @@ import type { StatCardProps } from "../../types/types";
 
 import { useLogin } from "../../hooks/useLogin";
 import { useTransaction } from "../../hooks/useTransactionContext";
+import { useDisplayPreferences } from "../../hooks/useDisplayPreferences";
 
 export function StatCard({ title, value, icon, className }: StatCardProps) {
+  const { currencySymbol, formatPositiveAmount } = useDisplayPreferences();
   return (
     <div className={className}>
       <h2>{title}</h2>
-      <p className={styles.value}>$ {value}</p>
+      <p className={styles.value}>
+        {currencySymbol} {formatPositiveAmount(value)}
+      </p>
       <p className={styles.icon}>{icon}</p>
     </div>
   );
